@@ -1,12 +1,14 @@
-FROM ubuntu:latest
+# 基础镜像（以python为例）
+FROM python:3.9-slim
 
-RUN apt-get update && apt-get install -y python3 python3-pip
+# 设置工作目录
+WORKDIR /opt
 
-RUN ln -s /usr/bin/python3 /usr/bin/python
-
-COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
-
+# 复制代码
 COPY app.py .
 
-CMD ["python3", "app.py"]
+# 安装flask
+RUN pip install flask
+
+# 启动命令
+CMD ["python", "app.py"]
