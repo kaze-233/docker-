@@ -1,12 +1,12 @@
-FROM ubuntu
+FROM ubuntu:latest
 
-RUN apt-get update
-RUN apt-get install -y python3.6 python3-pip
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-RUN pip install -r requirements.txt
+COPY app.py .
 
-COPY app.py /apt/app.py
-
-ENTRYPOINT FLASK_APP=/opt/app.py flask run ==host=0.0.0.0
+CMD ["python3", "app.py"]
